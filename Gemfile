@@ -19,7 +19,6 @@ gem 'rake'
 gem 'shotgun'
 gem 'pry'
 gem 'bcrypt'
-gem 'bootstrap-sass'
 
 group :test do
   gem 'faker'
