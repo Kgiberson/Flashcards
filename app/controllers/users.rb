@@ -30,7 +30,6 @@ post '/sign_up' do
 end
 
 get '/users/:user_id/decks' do
-  @user = User.find(params[:user_id])
   erb :deck_view
 end
 
@@ -40,47 +39,16 @@ get '/logout' do
 end
 
 get '/users/:user_id/decks/:id' do
-  @deck = Deck.find(params[:id])
-  @user = User.find(params[:user_id])
-  @cards = Card.where(deck_id: @deck.id)
+  # deck = Deck.find(params[:id])
+  # user = User.find(session[:user_id])
+  # user.round.create()
+  @cards = Card.where(deck_id: params[:id])
+  session[:cards] = @cards
   erb :round
 end
-
 
 post '/users/:user_id/decks/:id' do
-  cards = Card.where("deck_id = ?", params[:id])
-  user_answers = [params[:answer1],params[:answer2],params[:answer3],params[:answer4],params[:answer5],params[:answer6],params[:answer7],params[:answer8],params[:answer9],params[:answer10]]
+  cards = session[:cards]
 
-  index_of_wrong = []
-    cards.each_with_index do |card, i| 
-      if card.answer != user_answers[i]
-        index_of_wrong << i
-      end
-    end
-
-  wrong_cards = []
-  index_of_wrong.each do |wrong_index|
-    wrong_cards << cards[wrong_index]
-  end
-  p wrong_cards
-  erb :round
+  answers = params[answer]
 end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
